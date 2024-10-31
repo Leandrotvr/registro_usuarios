@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Usuario</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        form { display: flex; flex-direction: column; max-width: 300px; gap: 10px; }
+        input { padding: 8px; font-size: 16px; }
+        button { padding: 10px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <form id="registroForm">
+        <h2>Registro de Usuario</h2>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="email" name="correo" placeholder="Correo electrónico" required>
+        <input type="password" name="contraseña" placeholder="Contraseña" required>
+        <button type="submit">Registrarse</button>
+    </form>
+    <script>
+        document.getElementById("registroForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            const message = await response.text();
+            alert(message);
+        });
+    </script>
+</body>
+</html>
